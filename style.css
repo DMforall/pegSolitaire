@@ -1,0 +1,13 @@
+#container
+{
+  height: 1000px;
+  position: relative;
+  width: 1000px;
+}
+#controls
+{
+  bottom: 740;
+  left: 687;
+  position: absolute;
+  width: 100%;
+}

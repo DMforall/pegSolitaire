@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Solo Test (Peg Solitaire)</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src="soloTestClass.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="container">
+  <canvas id="testVis" width="930" height="700" style="border:1px solid black;">
+  </canvas>
+  <menu id="controls">
+    <button type="button" onClick="invokeEvent(0)">New game</button>
+    <button type="button" onClick="invokeEvent(1)">Best solution</button>
+  </menu>
+</div>
+
+<script>
+let canvas = document.getElementById("testVis");
+let sTest;
+
+// Start game
+invokeEvent(0);
+
+function invokeEvent (id) {
+  if (id == 0) {
+    sTest = new soloTestClass(canvas);
+    sTest.startGame(true);
+  } else if (id == 1) {
+    var worker = new Worker('searchSolution.js');
+    worker.addEventListener('message', function(e) {
+      drawOnConsole(e.data);
+      worker.terminate();
+    }, false);
+    worker.postMessage(JSON.stringify(sTest));
+  }
+}
+
+</script>
+</body>
+</html>
